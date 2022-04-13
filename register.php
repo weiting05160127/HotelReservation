@@ -4,13 +4,13 @@
     <title>Roxandrea Hotel</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i" rel="stylesheet">
 
     <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="css/animate.css">
-    
+
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/owl.theme.default.min.css">
     <link rel="stylesheet" href="css/magnific-popup.css">
@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="css/bootstrap-datepicker.css">
     <link rel="stylesheet" href="css/jquery.timepicker.css">
 
-    
+
     <link rel="stylesheet" href="css/flaticon.css">
     <link rel="stylesheet" href="css/icomoon.css">
     <link rel="stylesheet" href="css/style.css">
@@ -166,7 +166,7 @@
   <br><br>
   <div id="flip"><button class="open-button">Register</button></div>
   <div id="Myform" style="display: none;">
-    <form form action="post" id="passV" class="form-container">
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="passV" class="form-container">
 
       <label for="userName"><b>Name</b></label>
       <input type="text" placeholder="Enter Name" name="userName" required>
@@ -178,15 +178,15 @@
       <input type="text" placeholder="Enter Email" name="email" required>
 
       <label for="State"><b>State</b></label>
-      <select>
+      <select id="State" name="State">
         <option selected="selected">--Select--</option>
         <?php
-        $state = array("Johor","Kedah","Kelantan","Malacca","Negeri Sembilan","Pahang","Penang","Perak","Perlis","Sabah","Sarawak","Selangor","Terengganu");
-        
-        foreach($state as $item){
-            echo "<option value='strtoupper($item)'>$item</option>";
-        }
-        ?>
+$state = array("Johor", "Kedah", "Kelantan", "Malacca", "Negeri Sembilan", "Pahang", "Penang", "Perak", "Perlis", "Sabah", "Sarawak", "Selangor", "Terengganu");
+
+foreach ($state as $item) {
+    echo "<option value='strtoupper($item)'>$item</option>";
+}
+?>
       </select>
 
       <label for="psw"><b>Password</b></label>
@@ -195,7 +195,7 @@
       <label for="verifyPsw"><b>Verify Password</b></label>
       <input type="password" placeholder="Confirm Password" name="confirm_password" required>
 
-      <button type="submit" id="btnSub" class="btn">Login</button>
+      <button type="submit" id="btnSub" name="btnSub" class="btn">Login</button>
     </form>
   </div>
 <br><br>
@@ -262,115 +262,124 @@
         </div>
       </div>
     </footer>
-  
+
+        <?php
+if (isset($_POST['btnSub'])) {
+
+    $Name = $_POST['userName'];
+    $Ic = $_POST['NRIC'];
+    $Email = $_POST['email'];
+    $State = $_POST['State'];
+    $Pass = $_POST['psw'];
+    $VPass = $_POST['confirm_password'];
+
+    function showState($State)
+    {
+        if ($State = "Johor") {
+            $Hometown = "Your are from " . $State;
+        } elseif ($State = "Kedah") {
+            $Hometown = "Your are from " . $State;
+        } elseif ($State = "Kelantan") {
+            $Hometown = "Your are from " . $State;
+        } elseif ($State = "Malacca") {
+            $Hometown = "Your are from " . $State;
+        } elseif ($State = "Negeri Sembilan") {
+            $Hometown = "Your are from " . $State;
+        } elseif ($State = "Pahang") {
+            $Hometown = "Your are from " . $State;
+        } elseif ($State = "Perak") {
+            $Hometown = "Your are from " . $State;
+        } elseif ($State = "Perlis") {
+            $Hometown = "Your are from " . $State;
+        } elseif ($State = "Sabah") {
+            $Hometown = "Your are from " . $State;
+        } elseif ($State = "Sarawak") {
+            $Hometown = "Your are from " . $State;
+        } elseif ($State = "Selangor") {
+            $Hometown = "Your are from " . $State;
+        } elseif ($State = "Terengganu") {
+            $Hometown = "Your are from " . $State;
+        } else {
+            echo "Error input......";
+        }
+    }
+
+    //Check gender
+    function checkGender($numCard)
+    {
+        $gender = substr($numCard, 11);
+        if ($gender % 2 == 0) {
+            $userGender = "Your are female.";
+        } else {
+            $userGender = "You are male.";
+        }
+
+        return $userGender;
+    }
+
+    //check date of birth
+    function checkDOB($numCard)
+    {
+        $DOBYear = substr($numCard, 0, 2);
+        $DOBMonth = substr($numCard, 2, 2);
+        $DOBday = substr($numCard, 4, 2);
+
+        switch ($DOBMonth) {
+            case '01':
+                $month = "January";
+                break;
+            case '04':
+                $month = "April";
+                break;
+            case '05':
+                $month = "May";
+                break;
+            case '06':
+                $month = "June";
+                break;
+            case '07':
+                $month = "July";
+                break;
+            case '08':
+                $month = "August";
+                break;
+            case '09':
+                $month = "September";
+                break;
+            case '10':
+                $month = "October";
+                break;
+            case "11":
+                $month = "November";
+                break;
+            case '12':
+                $month = "December";
+                break;
+            default:
+                $month = "Wrong input!!!";
+        }
+
+        $DOBDisplay = "Your birth day is $DOBday $month $DOBYear.";
+
+        return $DOBDisplay;
+    }
+
+    checkGender($Ic);
+    echo "<br>";
+    checkDOB($Ic);
+
+    ?>
 <!-- pop out modal -->
   <div class="popModal">
     <div class="modal-content">
       <div class="close">+</div>
         <center><img src="images/success.gif" width="100px" height="80px" ></center>
         <?php
-if (isset($_POST['btnSub'])){
-$Name = $_POST['userName'];
-$Ic = $_POST['NRIC'];
-$Email = $_POST['email'];
-$State = $_POST['Select'];
-$Pass = $_POST['psw'];
-$VPass = $_POST['confirm_password'];
 
-function showState($State){
-  if ($State="Johor") {
-    $Hometown="Your are from ".$State;
-  }
-  elseif ($State="Kedah"){
-      $Hometown="Your are from ".$State;
-    }
-  elseif ($State="Kelantan"){
-      $Hometown="Your are from ".$State;
-    }
-  elseif ($State="Malacca"){
-      $Hometown="Your are from ".$State;
-    }
-  elseif ($State="Negeri Sembilan"){
-      $Hometown="Your are from ".$State;
-    }
-  elseif ($State="Pahang"){
-      $Hometown="Your are from ".$State;
-    }
-  elseif ($State="Perak"){
-      $Hometown="Your are from ".$State;
-    }
-  elseif ($State="Perlis"){
-      $Hometown="Your are from ".$State;
-    }
-  elseif ($State="Sabah"){
-      $Hometown="Your are from ".$State;
-    }
-  elseif ($State="Sarawak"){
-      $Hometown="Your are from ".$State;
-    }
-  elseif ($State="Selangor"){
-      $Hometown="Your are from ".$State;
-    }
-  elseif ($State="Terengganu"){
-      $Hometown="Your are from ".$State;
-    }
-  else{
-    echo "Error input......";
-  }
-}
+    $output = $Name . "<br>your ic is " . $Ic . "<br>DOB: " . checkDOB($Ic) . "<br>Gender: " . checkGender($Ic) . "<br>Email: " . $Email . "<br>State: " . $State . "<br>Password: " . $Pass;
+    echo $output;
 
-  //Check gender
-  function checkGender($numCard){
-    $gender=substr($numCard,11);
-    if ($gender%2==0) {
-      $userGender = "Your are female.";
-    }
-    else{
-      $userGender = "You are male.";
-    }
-  }
-
-  //check date of birth
-  function checkDOB($numCard){
-    $DOBYear=substr($numCard,0,2);
-    $DOBMonth=substr($numCard,2,2);
-    $DOBday=substr($numCard,4,2);
-    switch ($DOBMonth) {
-      case '1':
-        $month="January";
-      
-        $month="April";
-      case '5':
-        $month="May";
-      case '6':
-        $month="June";
-      case '7':
-        $month="July";
-      case '8':
-        $month="August";
-      case '9':
-        $month="September";
-      case '10':
-        $month="October";
-      case "11":
-        $month="November";
-      case '12':
-        $month="December";
-      default:
-        echo "Wrong input!!!";
-    }
-
-  $DOBDisplay="Your birth day is $DOBday $month $DOBYear.";
-  }
-
-checkGender($Ic);
-echo "<br>";
-checkDOB($Ic);
-
-$output=$Name."<br>your ic is ".$Ic."<br>DOB: ".$DOBDisplay."<br>Gender: ".$userGender."<br>Email: ".$Email."<br>State: ".$State."<br>Password: ".$Pass;
-echo $output ;
-}
-?>
+    ?>
 <label><?php echo $output; ?></label>
       <form action="">
         <a href="#" class="button">Ok</a>
@@ -378,7 +387,7 @@ echo $output ;
       <hr>
 
   </div>
-  
+<?php }?>
 
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
@@ -402,7 +411,7 @@ echo $output ;
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
-    
+
   </body>
 
 <script>
@@ -416,13 +425,14 @@ document.getElementById('btnSub').addEventListener('click',function(){
 document.querySelector('.popModal').style.display='flex';
 });
 
-document.querySelector('.close').addEventListener('click',function(){
+/*document.querySelector('.close').addEventListener('click',function(){
   document.querySelector('.popModal').style.display='none';
-});
+});*/
 
 $(document).ready(function() {
     $(document).on('submit', '#passV', function() {
       // do your things
+submit();
       return false;
      });
 });
