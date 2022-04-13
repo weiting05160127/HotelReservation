@@ -425,14 +425,14 @@ document.getElementById('btnSub').addEventListener('click',function(){
 document.querySelector('.popModal').style.display='flex';
 });
 
-/*document.querySelector('.close').addEventListener('click',function(){
+document.querySelector('.close').addEventListener('click',function(){
   document.querySelector('.popModal').style.display='none';
-});*/
+});
 
 $(document).ready(function() {
     $(document).on('submit', '#passV', function() {
       // do your things
-submit();
+//submit();
       return false;
      });
 });
